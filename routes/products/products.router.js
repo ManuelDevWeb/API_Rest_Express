@@ -37,11 +37,17 @@ router.get('/:productId', (req, res) => {
     // Accediendo a los parámetros que vienen por URL
     const { productId } = req.params;
 
-    res.json({
-        productId,
-        name: 'Product 1',
-        price: 1000
-    })
+    if (productId === '999') {
+        res.status(404).json({
+            message: 'Not found'
+        })
+    } else {
+        res.status(200).json({
+            productId,
+            name: 'Product 1',
+            price: 1000
+        })
+    }
 })
 
 // POST: Crear un producto
@@ -49,7 +55,7 @@ router.post('/', (req, res) => {
     // Accediendo a los datos que vienen por el body (Utilizar postman o insomnia)
     const body = req.body;
 
-    res.json({
+    res.status(201).json({
         message: 'Product created',
         data: body
     })
