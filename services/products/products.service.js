@@ -3,7 +3,6 @@ const faker = require('faker');
 
 // Clase Servicio Productos
 class ProductsService {
-
     constructor() {
         this.products = [];
         // Cada que se cree una instancia del servicio se ejecuta la función
@@ -20,18 +19,18 @@ class ProductsService {
                 id: faker.datatype.uuid(),
                 name: faker.commerce.productName(),
                 price: parseInt(faker.commerce.price(), 10),
-                image: faker.image.imageUrl()
-            })
+                image: faker.image.imageUrl(),
+            });
         }
     }
 
     // Crear Producto
-    create(data) {
+    async create(data) {
         const newProduct = {
             id: faker.datatype.uuid(),
             // Concatenamos los valores que vienen por argumento
-            ...data
-        }
+            ...data,
+        };
 
         this.products.push(newProduct);
 
@@ -39,19 +38,25 @@ class ProductsService {
     }
 
     // Buscar Productos
-    find() {
-        return this.products;
+    async find() {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve(this.products);
+            }, 5000);
+        });
+        // return this.products;
     }
 
     // Buscar un producto
-    findOne(id) {
-        return this.products.find(product => product.id === id);
+    async findOne(id) {
+        // const name = this.getTotal();
+        return this.products.find((product) => product.id === id);
     }
 
     // Actualizar Producto
-    update(id, changes) {
+    async update(id, changes) {
         // Obtenemos el indice del producto
-        const index = this.products.findIndex(product => product.id === id);
+        const index = this.products.findIndex((product) => product.id === id);
 
         if (index === -1) {
             throw new Error('Product not found');
@@ -60,16 +65,16 @@ class ProductsService {
         const product = this.products[index];
         this.products[index] = {
             ...product,
-            ...changes
+            ...changes,
         };
 
         return this.products[index];
     }
 
     // Eliminar Producto
-    delete(id) {
+    async delete(id) {
         // Obtenemos el indice del producto
-        const index = this.products.findIndex(product => product.id === id);
+        const index = this.products.findIndex((product) => product.id === id);
 
         if (index === -1) {
             throw new Error('Product not found');
@@ -81,7 +86,6 @@ class ProductsService {
         return { id };
     }
 }
-
 
 // Exportamos módulo
 module.exports = ProductsService;

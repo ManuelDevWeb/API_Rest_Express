@@ -12,74 +12,73 @@ const service = new ProductsService();
 /* LOS ENDPOINTS ESPECIFICOS DEBEN DECLARARSE ANTES DE LOS ENDPOINTS DINAMICOS!!! */
 
 // GET: Obtener todos los productos
-router.get('/', (req, res) => {
+router.get('/', async(req, res) => {
     // Obteniendo todos los productos ejecutando el método find
-    const products = service.find();
+    const products = await service.find();
     res.json(products);
-})
+});
 
 router.get('/filter', (req, res) => {
     res.send('Yo soy un filter');
-})
+});
 
 // GET: Obtener un producto
-router.get('/:productId', (req, res) => {
-    // Accediendo a los parámetros que vienen por URL
-    const { productId } = req.params;
+router.get('/:productId', async(req, res, next) => {
+    try {
+        // Accediendo a los parámetros que vienen por URL
+        const { productId } = req.params;
 
-    // Obteniendo un producto ejecutando el método findOne
-    const product = service.findOne(productId);
+        // Obteniendo un producto ejecutando el método findOne
+        const product = await service.findOne(productId);
 
-    res.json(product);
-
-    // if (productId === '999') {
-    //     res.status(404).json({
-    //         message: 'Not found'
-    //     })
-    // } else {
-    //     res.status(200).json({
-    //         productId,
-    //         name: 'Product 1',
-    //         price: 1000
-    //     })
-    // }
-})
+        res.json(product);
+    } catch (error) {
+        // Next permite ejecutar el siguiente middleware, en este caso los tipo error que hayan
+        next(error);
+    }
+});
 
 // POST: Crear un producto
-router.post('/', (req, res) => {
+router.post('/', async(req, res) => {
     // Accediendo a los datos que vienen por el body (Utilizar postman o insomnia)
     const body = req.body;
 
     // Creando un producto ejecutando el método create
-    const newProduct = service.create(body);
+    const newProduct = await service.create(body);
 
     res.status(201).json(newProduct);
-})
+});
 
 // PATHC: Actualizar un producto
-router.patch('/:productId', (req, res) => {
-    // Accediendo a los parámetros que vienen por URL
-    const { productId } = req.params;
+router.patch('/:productId', async(req, res) => {
+    try {
+        // Accediendo a los parámetros que vienen por URL
+        const { productId } = req.params;
 
-    // Accediendo a los datos que vienen por el body (Utilizar postman o insomnia)
-    const body = req.body;
+        // Accediendo a los datos que vienen por el body (Utilizar postman o insomnia)
+        const body = req.body;
 
-    // Actualizando un producto ejecutando el método update
-    const updatedProduct = service.update(productId, body);
+        // Actualizando un producto ejecutando el método update
+        const updatedProduct = await service.update(productId, body);
 
-    res.json(updatedProduct);
-})
+        res.json(updatedProduct);
+    } catch (error) {
+        res.status(404).json({
+            message: error.message,
+        });
+    }
+});
 
 // DELETE: Eliminar un producto
-router.delete('/:productId', (req, res) => {
+router.delete('/:productId', async(req, res) => {
     // Accediendo a los parámetros que vienen por URL
     const { productId } = req.params;
 
     // Eliminando un producto ejecutando el método delete
-    const deletedProducr = service.delete(productId);
+    const deletedProducr = await service.delete(productId);
 
     res.json(deletedProducr);
-})
+});
 
 // Exportamos módulo
 module.exports = router;
