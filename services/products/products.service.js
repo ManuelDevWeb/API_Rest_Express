@@ -1,5 +1,7 @@
 // Importando faker (Permite generar data fake)
 const faker = require('faker');
+// Importando boom (Manejo de errores con status code)
+const boom = require('@hapi/boom');
 
 // Clase Servicio Productos
 class ProductsService {
@@ -20,6 +22,7 @@ class ProductsService {
                 name: faker.commerce.productName(),
                 price: parseInt(faker.commerce.price(), 10),
                 image: faker.image.imageUrl(),
+                isBlock: faker.datatype.boolean(),
             });
         }
     }
@@ -50,7 +53,17 @@ class ProductsService {
     // Buscar un producto
     async findOne(id) {
         // const name = this.getTotal();
-        return this.products.find((product) => product.id === id);
+        const product = this.products.find((product) => product.id === id);
+
+        if (!product) {
+            throw boom.notFound('Product not found');
+        }
+
+        if (product.isBlock) {
+            throw boom.conflict('Product is blocked');
+        }
+
+        return product;
     }
 
     // Actualizar Producto
@@ -59,7 +72,8 @@ class ProductsService {
         const index = this.products.findIndex((product) => product.id === id);
 
         if (index === -1) {
-            throw new Error('Product not found');
+            // Generando error amigable con boom
+            throw boom.notFound('Product not found');
         }
 
         const product = this.products[index];
@@ -77,7 +91,8 @@ class ProductsService {
         const index = this.products.findIndex((product) => product.id === id);
 
         if (index === -1) {
-            throw new Error('Product not found');
+            // Generando error amigable con boom
+            throw boom.notFound('Product not found');
         }
 
         // Eliminando 1 producto a partir del indice encontrado

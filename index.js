@@ -3,7 +3,11 @@ const express = require('express');
 // Importando modulo de rutas
 const routes = require('./routes/index.js');
 // Importando middleware de errores
-const { logErrors, errorHandler } = require('./middlewares/error.handler.js');
+const {
+    logErrors,
+    errorHandler,
+    boomErrorHandler,
+} = require('./middlewares/error.handler.js');
 
 // Creando una instancia de express
 const app = express();
@@ -22,6 +26,7 @@ routes(app);
 // Los middlewares de tipo errores se deben hacer despues de definir el routing
 // Si alguno de estos middlewares no tiene next, no se ejecuta el siguiente
 app.use(logErrors);
+app.use(boomErrorHandler);
 app.use(errorHandler);
 
 // Puerto en el que se va a escuchar el servidor

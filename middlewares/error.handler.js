@@ -19,5 +19,17 @@ function errorHandler(err, req, res, next) {
     next(err);
 }
 
+// Middleware para manejar errores con boom
+function boomErrorHandler(err, req, res, next) {
+    // Validamos si el error es tipo boom
+    if (err.isBoom) {
+        // Destructurando la información del error
+        const { output } = err;
+        res.status(output.statusCode).json(output.payload);
+    }
+    // Next permite ejecutar el siguiente middleware
+    next(err);
+}
+
 // Exportamos módulo
-module.exports = { logErrors, errorHandler };
+module.exports = { logErrors, errorHandler, boomErrorHandler };

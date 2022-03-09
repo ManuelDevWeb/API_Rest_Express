@@ -33,7 +33,7 @@ router.get('/:productId', async(req, res, next) => {
 
         res.json(product);
     } catch (error) {
-        // Next permite ejecutar el siguiente middleware, en este caso los tipo error que hayan
+        // Next permite ejecutar el siguiente middleware, en este caso los middleware tipo error que hayan
         next(error);
     }
 });
@@ -50,7 +50,7 @@ router.post('/', async(req, res) => {
 });
 
 // PATHC: Actualizar un producto
-router.patch('/:productId', async(req, res) => {
+router.patch('/:productId', async(req, res, next) => {
     try {
         // Accediendo a los parámetros que vienen por URL
         const { productId } = req.params;
@@ -63,9 +63,8 @@ router.patch('/:productId', async(req, res) => {
 
         res.json(updatedProduct);
     } catch (error) {
-        res.status(404).json({
-            message: error.message,
-        });
+        // Next permite ejecutar el siguiente middleware, en este caso los middleware tipo error que hayan
+        next(error);
     }
 });
 
