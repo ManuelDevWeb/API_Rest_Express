@@ -1,0 +1,98 @@
+• Configuraciones y estructura de archivos •
+
+1. Inicializar proyecto: npm init -y
+
+2. Instalar dependencias: npm i nodemon eslint eslint-config-prettier eslint-plugin-prettier prettier -D
+
+3. Crear el archivo: .gitignore (https://www.toptal.com/developers/gitignore (node, windows, linux, macOS))
+
+4. Crear el archivo: .editorconfig 
+
+5. Crear el archivo: .eslintrc.json
+
+6. Crear el archivo: index.js
+
+7. Agregar scripts en el archivo: package.json
+
+• Instalación de Express, creación de servidor y rutas •
+
+8. Instalar dependencia: npm i express
+
+9. Instanciar express en el archivo: index.js
+
+• Rutas con método tipo GET •
+
+10. Instalar dependencia: npm i faker@5.5.3 -S (Permite generar data fake)
+
+11. Crear rutas tipo GET en el archivo: index.js
+
+• Separación de Responsabilidades •
+
+12. Crear la carpeta: routes
+
+13. Crear la carpeta y el archivo: products/products.router.js
+
+14. Agregar las rutas de productos en el archivo: products/products.router.js
+
+15. Crear la carpeta y el archivo: users/users.router.js
+
+16. Agregar las rutas de usuarios en el archivo: users/users.router.js
+
+17. Crear la carpeta y el archivo: categories/categories.router.js
+
+18. Agregar las rutas de categories en el archivo: categories/categories.router.js
+
+• Rutas con método tipo POST •
+
+19. Crear rutas tipo POST en el archivo: products/products.router.js
+
+• Rutas con métodos tipo PUT, PATCH y DELETE •
+
+20. Crear rutas tipo PUT, PATCH y DELETE en el archivo: products/products.router.js
+
+• Servicios •
+
+21. Crear la carpeta: services
+
+22. Crear la carpeta y el archivo: products/products.service.js
+
+23. Agregar las funciones y lógicas de negocio en el archivo: products/products.service.js
+
+• Middlewares •
+
+24. Crear la carpeta: middlewares
+
+25. Crear el archivo: middlewares/error.handler.js
+
+26. Instalar dependencia: npm i @hapi/boom 
+
+27. Implementar boom creando un middleware en el archivo: middlewares/error.handler.js
+
+28. Instalr dependencia: npm i joi
+
+29. Crear la carpeta: schemas
+
+30. Crear el archivo: schemas/products/product.schema.js
+
+31. Crear el archivo: middlewares/validator.handler.js
+
+• Deployment •
+
+32. Instalar dependencia: npm i cors 
+
+33. Implementar cors en el archivo: index.js
+
+34. Probar api creando el archivo: frontend.html
+
+35. Despliegue en Heroku: -> Logearnos en Heroku
+                          -> Instalar Heroku: https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up
+                          -> npm install -g heroku
+                          -> heroku create
+                          -> git remote -v (Verificar si se ha agregado el repositorio nuevo)
+                          -> Agregar engines en el archivo: package.json
+                          -> Crear el archivo: Procfile
+                          -> heroku local web (Correr App localmente) 
+                          -> git add y commit de los últimos cambios
+                          -> git push heroku master (La rama puede variar dependiendo del equipo de trabajo)
+
+    URL: https://polar-reef-84791.herokuapp.com/
